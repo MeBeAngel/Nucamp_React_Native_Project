@@ -4,6 +4,7 @@ import { Input, CheckBox, Button, Icon } from 'react-native-elements';
 import * as SecureStore from 'expo-secure-store';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
+import * as ImageManipulator from 'expo-image-manipulator';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { baseUrl } from '../shared/baseUrl';
 
@@ -159,8 +160,25 @@ class RegisterTab extends Component {
             });
             if (!capturedImage.cancelled) {
                 console.log(capturedImage);
-                this.setState({ imageUrl: capturedImage.uri });
+                this.processImage(capturedImage.uri);
             }
+        }
+    }
+
+    processImage = async (imgUri) => {
+        const processedImage = await ImageManipulator.manipulateAsync(imgUri, [{ resize: { width: 400 } }], { format: "png" });
+        console.log(processedImage);
+        this.setState({ imageUrl: processedImage.uri });
+    }
+
+    getImageFromGallery = async () => {
+        const cameraRollPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+        if (cameraRollPermission.status === "granted") {
+            const capturedImage = await ImagePicker.launchImageLibraryAsync()
+            console.log(capturedImage);
+            this.processImage(capturedImage.uri);
+        } else {
+
         }
     }
 
@@ -191,6 +209,7 @@ class RegisterTab extends Component {
                             title='Camera'
                             onPress={this.getImageFromCamera}
                         />
+                        <Button title="Gallery" onPress={this.getImageFromGallery} />
                     </View>
                     <Input
                         placeholder='Username'
