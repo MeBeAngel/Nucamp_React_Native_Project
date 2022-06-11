@@ -43,6 +43,7 @@ class Reservation extends Component {
                 }
             ]
         );
+        this.resetForm();
     }
 
     resetForm() {

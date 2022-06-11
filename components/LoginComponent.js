@@ -177,8 +177,6 @@ class RegisterTab extends Component {
             const capturedImage = await ImagePicker.launchImageLibraryAsync()
             console.log(capturedImage);
             this.processImage(capturedImage.uri);
-        } else {
-
         }
     }
 

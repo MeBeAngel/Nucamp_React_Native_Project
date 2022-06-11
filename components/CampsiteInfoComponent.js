@@ -31,7 +31,7 @@ function RenderCampsite(props) {
     const view = React.createRef();
 
     const recognizeDrag = ({ dx }) => (dx < -200) ? true : false;
-    const recognizeComment = ({ moveX }) => (moveX > 200) ? true : false;
+    const recognizeComment = ({ dx }) => (dx > 200) ? true : false;
 
     const panResponder = PanResponder.create({
         onStartShouldSetPanResponder: () => true,
@@ -215,10 +215,22 @@ class CampsiteInfo extends Component {
                         <Input leftIcon={<Icon type="font-awesome" name="user-o" />} leftIconContainerStyle={{ paddingRight: 10 }} onChangeText={authorValue => this.setState({ author: authorValue })} />
                         <Input leftIcon={<Icon type="font-awesome" name="comment-o" />} leftIconContainerStyle={{ paddingRight: 10 }} onChangeText={textValue => this.setState({ text: textValue })} />
                         <View style={{ margin: 10 }}>
-                            <Button title="Submit" color='#5637DD' onPress={() => { this.toggleModal(); this.handleComment(campsiteId); }}></Button>
+                            <Button
+                                title="Submit"
+                                color='#5637DD'
+                                onPress={() => {
+                                    this.toggleModal();
+                                    this.handleComment(campsiteId);
+                                }}></Button>
                         </View>
                         <View style={{ margin: 10 }}>
-                            <Button title="Cancel" color='#808080' onPress={() => { this.toggleModal(); this.resetForm(); }}></Button>
+                            <Button
+                                title="Cancel"
+                                color='#808080'
+                                onPress={() => {
+                                    this.toggleModal();
+                                    this.resetForm();
+                                }}></Button>
                         </View>
                     </View>
                 </Modal>

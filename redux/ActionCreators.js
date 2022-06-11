@@ -56,12 +56,6 @@ export const addComment = comment => ({
 });
 
 
-
-
-
-
-
-
 export const fetchCampsites = () => dispatch => {
 
     dispatch(campsitesLoading());
